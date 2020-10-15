@@ -17,27 +17,35 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import java.awt.Color;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import javax.swing.JOptionPane;
+import static practicaarchivos.Empresa.archemp;
+import static practicaarchivos.Empresa.frame;
+
 /**
  *
  * @author woltmannj
  */
 public class Oferta extends javax.swing.JFrame {
-  File arch=new File("");
-    String val="", habilidad="", salmin="0";
-    
+
+   public static File arch = new File("Ofertas.txt");
+    String val = "", habilidad = "", salmin = "0";
+  
+
     /**
      * Creates new form Vista
      */
-    public Oferta() {
+    public Oferta() throws IOException {
         initComponents();
-       addbutton.setToolTipText("Añadir");
-       elimbutton.setToolTipText("Eliminar");
-       cleanbutton.setToolTipText("Limpiar");
-       backbutton.setToolTipText("Volver");
-       SaveButton.setToolTipText("Guardar");
-       OpenButton.setToolTipText("Abrir");
-       
+        this.mostartabla2();
+        addbutton.setToolTipText("Añadir");
+        elimbutton.setToolTipText("Eliminar");
+        cleanbutton.setToolTipText("Limpiar");
+        backbutton.setToolTipText("Volver");
+        SaveButton.setToolTipText("Guardar");
+        OpenButton.setToolTipText("Abrir");
+
     }
 
     /**
@@ -75,6 +83,8 @@ public class Oferta extends javax.swing.JFrame {
         nivelc = new javax.swing.JComboBox<>();
         ningu = new javax.swing.JCheckBox();
         cancelar = new javax.swing.JButton();
+        nempcb = new javax.swing.JComboBox<>();
+        jLabel6 = new javax.swing.JLabel();
         fc = new javax.swing.JFileChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
         Tabla = new javax.swing.JTable();
@@ -139,6 +149,11 @@ public class Oferta extends javax.swing.JFrame {
         jLabel5.setText("Titulaciones");
 
         Titulacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Escoja la titulación", "Bachiller", "Tecnico en sistemas", "Ingeniero de sistemas", "Ingeniero industrial", "Ingeniero electronico", "Ingeniero electrico", "Ingeniero ambienta", "Ingeniero mecanicol", "Medico", "Contador", "Administrador de empresas", "Diseñador Grafico", "Diseñador industrial", "Matemático", "Comunicador social" }));
+        Titulacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TitulacionActionPerformed(evt);
+            }
+        });
 
         jLabel8.setText("Escoja la habilidad que desea de sus empleados");
 
@@ -206,6 +221,15 @@ public class Oferta extends javax.swing.JFrame {
             }
         });
 
+        nempcb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Escoja empresa" }));
+        nempcb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nempcbActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setText("Seleccione empresa");
+
         javax.swing.GroupLayout frameLayout = new javax.swing.GroupLayout(frame.getContentPane());
         frame.getContentPane().setLayout(frameLayout);
         frameLayout.setHorizontalGroup(
@@ -230,9 +254,13 @@ public class Oferta extends javax.swing.JFrame {
                                 .addComponent(Salmintf, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(Nombretf, javax.swing.GroupLayout.Alignment.LEADING))))
                     .addGroup(frameLayout.createSequentialGroup()
-                        .addComponent(jLabel5)
+                        .addGroup(frameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6))
                         .addGap(21, 21, 21)
-                        .addComponent(Titulacion, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(frameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(nempcb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Titulacion, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addGroup(frameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, frameLayout.createSequentialGroup()
@@ -252,22 +280,22 @@ public class Oferta extends javax.swing.JFrame {
                         .addGap(65, 65, 65))
                     .addGroup(frameLayout.createSequentialGroup()
                         .addGroup(frameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
-                            .addComponent(ningu))
+                            .addComponent(ningu)
+                            .addComponent(jLabel8))
                         .addGap(79, 79, 79))))
             .addGroup(frameLayout.createSequentialGroup()
-                .addGap(131, 131, 131)
+                .addGap(123, 123, 123)
                 .addComponent(insertar)
-                .addGap(99, 99, 99)
+                .addGap(112, 112, 112)
                 .addComponent(cancelar)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         frameLayout.setVerticalGroup(
             frameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(frameLayout.createSequentialGroup()
                 .addGroup(frameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(frameLayout.createSequentialGroup()
-                        .addContainerGap(18, Short.MAX_VALUE)
+                        .addContainerGap(25, Short.MAX_VALUE)
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(frameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -316,16 +344,21 @@ public class Oferta extends javax.swing.JFrame {
                             .addComponent(nivelc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(ningu)
-                        .addGap(116, 116, 116))
+                        .addGap(51, 51, 51))
                     .addGroup(frameLayout.createSequentialGroup()
                         .addGroup(frameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
                             .addComponent(Titulacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addGroup(frameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(insertar)
-                            .addComponent(cancelar))
-                        .addGap(43, 43, 43))))
+                            .addComponent(nempcb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(22, 22, 22)
+                .addGroup(frameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(insertar)
+                    .addComponent(cancelar))
+                .addGap(21, 21, 21))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -336,11 +369,11 @@ public class Oferta extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nombre/Descripción  ", "Salario Min", "Salario Max", "J. Parcial ", "J. Completa", "Titulaciones", "Habilidades", "Nivel "
+                "Nombre/Descripción  ", "Salario Min", "Salario Max", "J. Parcial ", "J. Completa", "Titulaciones", "Habilidades", "Nivel ", "Empresa"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Long.class, java.lang.Long.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.Long.class, java.lang.Long.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -357,9 +390,10 @@ public class Oferta extends javax.swing.JFrame {
             Tabla.getColumnModel().getColumn(5).setResizable(false);
             Tabla.getColumnModel().getColumn(6).setResizable(false);
             Tabla.getColumnModel().getColumn(7).setResizable(false);
+            Tabla.getColumnModel().getColumn(8).setResizable(false);
         }
 
-        addbutton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/practicaarchivos/agregar-usuario.png"))); // NOI18N
+        addbutton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/practicaarchivos/iconos/agregar-usuario.png"))); // NOI18N
         addbutton.setBorder(null);
         addbutton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         addbutton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -373,7 +407,7 @@ public class Oferta extends javax.swing.JFrame {
             }
         });
 
-        elimbutton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/practicaarchivos/borrar.png"))); // NOI18N
+        elimbutton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/practicaarchivos/iconos/borrar.png"))); // NOI18N
         elimbutton.setBorder(null);
         elimbutton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         elimbutton.addActionListener(new java.awt.event.ActionListener() {
@@ -382,7 +416,7 @@ public class Oferta extends javax.swing.JFrame {
             }
         });
 
-        cleanbutton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/practicaarchivos/escoba.png"))); // NOI18N
+        cleanbutton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/practicaarchivos/iconos/escoba.png"))); // NOI18N
         cleanbutton.setBorder(null);
         cleanbutton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cleanbutton.addActionListener(new java.awt.event.ActionListener() {
@@ -391,7 +425,7 @@ public class Oferta extends javax.swing.JFrame {
             }
         });
 
-        SaveButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/practicaarchivos/disquete.png"))); // NOI18N
+        SaveButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/practicaarchivos/iconos/disquete.png"))); // NOI18N
         SaveButton.setBorder(null);
         SaveButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         SaveButton.addActionListener(new java.awt.event.ActionListener() {
@@ -400,7 +434,7 @@ public class Oferta extends javax.swing.JFrame {
             }
         });
 
-        OpenButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/practicaarchivos/sobre-abierto.png"))); // NOI18N
+        OpenButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/practicaarchivos/iconos/sobre-abierto.png"))); // NOI18N
         OpenButton.setBorder(null);
         OpenButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         OpenButton.addActionListener(new java.awt.event.ActionListener() {
@@ -409,7 +443,7 @@ public class Oferta extends javax.swing.JFrame {
             }
         });
 
-        backbutton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/practicaarchivos/volver.png"))); // NOI18N
+        backbutton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/practicaarchivos/iconos/volver.png"))); // NOI18N
         backbutton.setBorder(null);
         backbutton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         backbutton.addActionListener(new java.awt.event.ActionListener() {
@@ -448,7 +482,7 @@ public class Oferta extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 8, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(OpenButton, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(SaveButton, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -480,74 +514,154 @@ public class Oferta extends javax.swing.JFrame {
         nivelc.setSelectedIndex(0);
         nivelhc.setSelectedIndex(0);
         Nivelsl.setSelectedIndex(0);
+        nempcb.removeAllItems();
+        nempcb.addItem("Escoja empresa");
+        nempcb.setSelectedIndex(0);
+        try {
+            this.insertarempresa();
+        } catch (IOException ex) {
+            Logger.getLogger(Oferta.class.getName()).log(Level.SEVERE, null, ex);
+        }
         frame.setBounds(50, 50, 750, 400);
         frame.setVisible(true);
         this.setVisible(false);
+
     }//GEN-LAST:event_addbuttonActionPerformed
-     public boolean verificarhabilidades (){
-         if ((projava.isSelected() && nivelpj.getSelectedIndex()!=0) || (habcom.isSelected() && nivelhc.getSelectedIndex()!=0) 
-                 || (seglen.isSelected() && Nivelsl.getSelectedIndex()!=0) || (ningu.isSelected()) 
-                 || (lider.isSelected() && nivell.getSelectedIndex()!=0) || (crea.isSelected() && nivelc.getSelectedIndex()!=0)){
-             return true;
-         } else {
-             return false;
-         }
-     }
+    public boolean verificarhabilidades() {
+        if ((projava.isSelected() && nivelpj.getSelectedIndex() != 0) || (habcom.isSelected() && nivelhc.getSelectedIndex() != 0)
+                || (seglen.isSelected() && Nivelsl.getSelectedIndex() != 0) || (ningu.isSelected())
+                || (lider.isSelected() && nivell.getSelectedIndex() != 0) || (crea.isSelected() && nivelc.getSelectedIndex() != 0) /*|| (nempcb.getSelectedIndex() != 0)*/) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void insertarempresa() throws FileNotFoundException, IOException {
+        if (archemp.exists()) {
+            FileReader fr = new FileReader(archemp);
+            BufferedReader br = new BufferedReader(fr);
+            String x;
+            while ((x = br.readLine()) != null) {
+                if (x.contains(",")) {
+                    int n = x.indexOf(",");
+                    String nombre = x.substring(0, n);
+                    nempcb.addItem(nombre);
+                }
+            }
+            br.close();
+        }
+    }
+
+    public void mostartabla2() throws FileNotFoundException, IOException {
+        if (arch.exists()) {
+            DefaultTableModel table = (DefaultTableModel) Tabla.getModel();
+            FileReader fr = new FileReader(arch);
+            BufferedReader br = new BufferedReader(fr);
+            String y;
+
+            while ((y = br.readLine()) != null) {
+
+                if (y.contains(",")) {
+
+                    String[] campos = y.split(",");
+                    String nom = campos[0];
+                    Long salmin = Long.parseLong(campos[1]);
+                    Long salmax = Long.parseLong(campos[2]);
+                    Object parcial = false;
+                    if (campos[3].equals("true")) {
+                        parcial = true;
+                    }
+                    Object completa = false;
+                    if (campos[4].equals("true")) {
+                        completa = true;
+                    }
+                    String titulacion = campos[5];
+                    String habilidad = campos[6];
+                    String val = campos[7];
+                    String empresatb = campos[8];
+
+                    table.addRow(new Object[]{nom, salmin, salmax, parcial, completa, titulacion, habilidad, val, empresatb});
+                }
+
+            }
+            br.close();
+        }
+    }
     
-     
-     
+    
+    
+
+
     private void insertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertarActionPerformed
-        
-        if ((Nombretf.getText().equals("")) || (Salmintf.getText().equals(""))  || (Salmaxtf.getText().equals(""))
-                || (Parcial.isSelected()==false && Completa.isSelected()==false) || this.verificarhabilidades()==false
-                || Titulacion.getSelectedItem().toString().equals("Escoja titulacion")){
-          
+
+        if ((Nombretf.getText().equals("")) || (Salmintf.getText().equals("")) || (Salmaxtf.getText().equals(""))
+                || (Parcial.isSelected() == false && Completa.isSelected() == false) || this.verificarhabilidades() == false
+                || Titulacion.getSelectedItem().toString().equals("Escoja titulacion") || nempcb.getSelectedItem().toString().equals("Escoja empresa")) {
+
             JOptionPane.showMessageDialog(null, "llene todos los campos");
         } else {
-        String nom =(Nombretf.getText());
-        long salmin = Long.parseLong(Salmintf.getText());
-        long salmax = Long.parseLong(Salmaxtf.getText());
-        boolean parcial = Parcial.isSelected();
-        boolean completa = Completa.isSelected();
-        String titulacion= Titulacion.getSelectedItem().toString();
-         if (Nivelsl.getSelectedItem().toString() != "Escoja valoracion" && seglen.isSelected()) {
-            habilidad = habilidad + "segunda lengua ";
-            val = val + Nivelsl.getSelectedItem().toString() + " ";
-        }
-        if (nivelpj.getSelectedItem().toString() != "Escoja valoracion" && projava.isSelected()) {
-            habilidad = habilidad + "programacionjava ";
-            val = val + nivelpj.getSelectedItem().toString() + " ";
-        }
-        if (nivelhc.getSelectedItem().toString() != "Escoja valoracion" && habcom.isSelected()) {
-            habilidad = habilidad + "habilidadescomunicativas ";
-            val = val + nivelhc.getSelectedItem().toString() + " ";
-        }
-        if (nivell.getSelectedItem().toString() != "Escoja valoracion" && lider.isSelected()) {
-            habilidad = habilidad + "lider ";
-            val = val + nivell.getSelectedItem().toString() + "";
-        }
-        if (nivelc.getSelectedItem().toString() != "Escoja valoracion" && crea.isSelected()) {
-            habilidad = habilidad + "creativo ";
-            val = val + nivelc.getSelectedItem().toString() + " ";
-        }
-        if (ningu.isSelected()) {
-            habilidad= "ninguno";
+            String nom = (Nombretf.getText());
+            long salmin = Long.parseLong(Salmintf.getText());
+            long salmax = Long.parseLong(Salmaxtf.getText());
+            boolean parcial = Parcial.isSelected();
+            boolean completa = Completa.isSelected();
+            String titulacion = Titulacion.getSelectedItem().toString();
+            habilidad="";
             val="";
-
-        }
-        DefaultTableModel table = (DefaultTableModel) Tabla.getModel();
-        table.addRow(new Object[]{nom, salmin, salmax, parcial, completa, titulacion, habilidad, val});
-        frame.setVisible(false);
-       this.setVisible(true);
-        }
             
-        
-       
+              if (Nivelsl.getSelectedItem().toString() != "Escoja valoracion" && seglen.isSelected()) {
+                habilidad = habilidad + "segunda lengua ";
+                val = val + Nivelsl.getSelectedItem().toString() + " ";
+            } else {
+                val= val + "0 ";
+            }
+
+            if (nivelpj.getSelectedItem().toString() != "Escoja valoracion" && projava.isSelected()) {
+                habilidad = habilidad + "programacionjava ";
+                val = val + nivelpj.getSelectedItem().toString() + " ";
+            } else {
+                val= val + "0 ";
+            }
+            if (nivelhc.getSelectedItem().toString() != "Escoja valoracion" && habcom.isSelected()) {
+                habilidad = habilidad + "habilidadescomunicativas ";
+                val = val + nivelhc.getSelectedItem().toString() + " ";
+            } else {
+                val= val + "0 ";
+            }
+            if (nivell.getSelectedItem().toString() != "Escoja valoracion" && lider.isSelected()) {
+                habilidad = habilidad + "lider ";
+                val = val + nivell.getSelectedItem().toString() + "";
+            } else {
+                val= val + "0 ";
+            }
+            if (nivelc.getSelectedItem().toString() != "Escoja valoracion" && crea.isSelected()) {
+                habilidad = habilidad + "creativo ";
+                val = val + nivelc.getSelectedItem().toString() + " ";
+            } else {
+                val= val + "0 ";
+            }
+            if (ningu.isSelected()) {
+                habilidad = "ninguno";
+                val = "0 0 0 0 0 ";
+
+            }
+            
+            String empresatb= nempcb.getSelectedItem().toString();
+            DefaultTableModel table = (DefaultTableModel) Tabla.getModel();
+            table.addRow(new Object[]{nom, salmin, salmax, parcial, completa, titulacion, habilidad, val, empresatb});
+            frame.setVisible(false);
+            this.setVisible(true);
+        }
+
+
     }//GEN-LAST:event_insertarActionPerformed
 
     private void elimbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_elimbuttonActionPerformed
+        if (Tabla.getSelectedRow() == -1){JOptionPane.showMessageDialog(null,"Favor seleccione una fila");}else{
         DefaultTableModel table = (DefaultTableModel) Tabla.getModel();
         table.removeRow(Tabla.getSelectedRow());
+        }
     }//GEN-LAST:event_elimbuttonActionPerformed
 
     private void cleanbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cleanbuttonActionPerformed
@@ -556,12 +670,13 @@ public class Oferta extends javax.swing.JFrame {
     }//GEN-LAST:event_cleanbuttonActionPerformed
 
     private void SaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButtonActionPerformed
-      if (!arch.exists()) {
+        if (!arch.exists()) {
             FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos .txt", "txt");
             fc.setFileFilter(filtro);
             int opcion = fc.showSaveDialog(this);
             if (opcion == JFileChooser.APPROVE_OPTION) {
-                arch =fc.getSelectedFile();
+                arch = fc.getSelectedFile();
+
             }
         }
         int filas = Tabla.getRowCount();
@@ -574,15 +689,19 @@ public class Oferta extends javax.swing.JFrame {
                 Object salmax = table.getValueAt(i, 2);
                 Object parcial = table.getValueAt(i, 3);
                 Object completa = table.getValueAt(i, 4);
-                Object titulacion= table.getValueAt(i, 5);
-                Object habilidad= table.getValueAt(i, 6);
-                Object nivel= table.getValueAt(i, 7);
-                bw.write(nom + "," + salmin + "," + salmax + "," + parcial + "," + completa + "," + titulacion + "," + habilidad + "," + nivel);
+                Object titulacion = table.getValueAt(i, 5);
+                Object habilidad = table.getValueAt(i, 6);
+                Object nivel = table.getValueAt(i, 7);
+                Object empresatb = table.getValueAt(i, 8);
+                bw.write(nom + "," + salmin + "," + salmax + "," + parcial + "," + completa + "," + titulacion + "," + habilidad + "," + nivel + "," + empresatb);
                 bw.newLine();
             }
+            bw.close();
+            JOptionPane.showMessageDialog(null, "Guardado");
         } catch (IOException ex) {
             Logger.getLogger(Demanda.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }//GEN-LAST:event_SaveButtonActionPerformed
 
     private void OpenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenButtonActionPerformed
@@ -605,24 +724,26 @@ public class Oferta extends javax.swing.JFrame {
                     boolean completa = Boolean.parseBoolean(Datos[4]);
                     String titulacion = (Datos[5]);
                     String habilidad = (Datos[6]);
-                    String nivel= ( Datos[7]);
-                    
-                    table.addRow(new Object[]{nom, salmin, salmax, parcial, completa, titulacion, habilidad, nivel});
+                    String nivel = (Datos[7]);
+                    String empresa = (Datos[8]);
+
+                    table.addRow(new Object[]{nom, salmin, salmax, parcial, completa, titulacion, habilidad, nivel, empresa});
                 }
+                leer.close();
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(Demanda.class.getName()).log(Level.SEVERE, null, ex);
             }
-    }                   
+        }
     }//GEN-LAST:event_OpenButtonActionPerformed
 
     private void NombretfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombretfActionPerformed
-  
+
     }//GEN-LAST:event_NombretfActionPerformed
 
     private void NombretfKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NombretfKeyTyped
-        char c=evt.getKeyChar();
-        if((c<'a' || c>'z') && (c<'A' || c>'Z') && ((int)evt.getKeyChar()!=32)){
-        evt.consume();
+        char c = evt.getKeyChar();
+        if ((c < 'a' || c > 'z') && (c < 'A' || c > 'Z') && ((int) evt.getKeyChar() != 32)) {
+            evt.consume();
         }
     }//GEN-LAST:event_NombretfKeyTyped
 
@@ -633,7 +754,7 @@ public class Oferta extends javax.swing.JFrame {
     private void backbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backbuttonActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        Inicio i= new Inicio();
+        Inicio i = new Inicio();
         i.setVisible(true);
     }//GEN-LAST:event_backbuttonActionPerformed
 
@@ -642,18 +763,18 @@ public class Oferta extends javax.swing.JFrame {
     }//GEN-LAST:event_SalmintfActionPerformed
 
     private void SalmintfKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_SalmintfKeyTyped
-         char c=evt.getKeyChar();
-     if(c<'0' || c>'9'){
-         evt.consume();
-     }
-        
+        char c = evt.getKeyChar();
+        if (c < '0' || c > '9') {
+            evt.consume();
+        }
+
     }//GEN-LAST:event_SalmintfKeyTyped
 
     private void SalmaxtfKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_SalmaxtfKeyTyped
-  char c=evt.getKeyChar();
-     if(c<'0' || c>'9'){
-         evt.consume();
-     }
+        char c = evt.getKeyChar();
+        if (c < '0' || c > '9') {
+            evt.consume();
+        }
     }//GEN-LAST:event_SalmaxtfKeyTyped
 
     private void NivelslActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NivelslActionPerformed
@@ -690,10 +811,17 @@ public class Oferta extends javax.swing.JFrame {
         this.setVisible(true);
     }//GEN-LAST:event_cancelarActionPerformed
 
+    private void nempcbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nempcbActionPerformed
+
+    }//GEN-LAST:event_nempcbActionPerformed
+
+    private void TitulacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TitulacionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TitulacionActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox Completa;
@@ -706,14 +834,14 @@ public class Oferta extends javax.swing.JFrame {
     private javax.swing.JButton SaveButton;
     private javax.swing.JTable Tabla;
     private javax.swing.JComboBox<String> Titulacion;
-    private javax.swing.JButton addbutton;
+    public static javax.swing.JButton addbutton;
     private javax.swing.JButton backbutton;
     private javax.swing.JButton cancelar;
     private javax.swing.JButton cleanbutton;
     private javax.swing.JCheckBox crea;
     private javax.swing.JButton elimbutton;
     private javax.swing.JFileChooser fc;
-    private javax.swing.JFrame frame;
+    public static javax.swing.JFrame frame;
     private javax.swing.JCheckBox habcom;
     private javax.swing.JButton insertar;
     private javax.swing.JLabel jLabel1;
@@ -721,9 +849,11 @@ public class Oferta extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JCheckBox lider;
+    public javax.swing.JComboBox<String> nempcb;
     private javax.swing.JCheckBox ningu;
     private javax.swing.JComboBox<String> nivelc;
     private javax.swing.JComboBox<String> nivelhc;

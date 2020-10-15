@@ -6,8 +6,17 @@
 package practicaarchivos;
 
 import java.awt.Color;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import static practicaarchivos.Oferta.arch;
 
 /**
  *
@@ -15,12 +24,15 @@ import javax.swing.JOptionPane;
  */
 public class Inicio extends javax.swing.JFrame {
 
+    Nodo ptr = null;
+    Nodo q = null;
+
     /**
      * Creates new form Inicio
      */
     public Inicio() {
         initComponents();
-         //Color JFrame
+        //Color JFrame
         this.getContentPane().setBackground(Color.white);
 
     }
@@ -49,14 +61,14 @@ public class Inicio extends javax.swing.JFrame {
         setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel1.setText("Seleccione su tipo de usuario:");
+        jLabel1.setText("Seleccione una opcion:");
 
         jLabel2.setFont(new java.awt.Font("Verdana", 1, 36)); // NOI18N
         jLabel2.setText("Bienvenido");
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/practicaarchivos/human ware.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/practicaarchivos/iconos/human ware.png"))); // NOI18N
 
-        BotonEvaluador.setIcon(new javax.swing.ImageIcon(getClass().getResource("/practicaarchivos/hombre-de-negocios.png"))); // NOI18N
+        BotonEvaluador.setIcon(new javax.swing.ImageIcon(getClass().getResource("/practicaarchivos/iconos/hombre-de-negocios.png"))); // NOI18N
         BotonEvaluador.setBorder(null);
         BotonEvaluador.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -94,50 +106,54 @@ public class Inicio extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel3)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                        .addGap(60, 60, 60)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(BotonUsuario)
-                                    .addComponent(jLabel4))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(EmpresaButton, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(Empreeesa))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5)
-                                    .addComponent(BotonEvaluador))))
-                        .addGap(46, 46, 46))))
+                            .addComponent(BotonUsuario)
+                            .addComponent(jLabel4))
+                        .addGap(104, 104, 104)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(EmpresaButton, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Empreeesa))
+                        .addGap(89, 89, 89)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(BotonEvaluador, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(176, 176, 176)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(187, 187, 187)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(108, 108, 108)
+                        .addComponent(jLabel3)))
+                .addContainerGap(100, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1)
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(BotonUsuario)
+                            .addComponent(EmpresaButton))
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(EmpresaButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(BotonEvaluador, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(BotonUsuario, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(14, 14, 14)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
-                            .addComponent(Empreeesa)
-                            .addComponent(jLabel5))))
-                .addContainerGap(48, Short.MAX_VALUE))
+                            .addComponent(Empreeesa)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(BotonEvaluador)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel5)))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         pack();
@@ -145,36 +161,57 @@ public class Inicio extends javax.swing.JFrame {
 
     private void BotonUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonUsuarioActionPerformed
         // TODO add your handling code here:
-          int tipo= JOptionPane.showOptionDialog(this,"Escoja el tipo de usuario:","HUMAN-WARE",JOptionPane.YES_NO_CANCEL_OPTION,
-            JOptionPane.QUESTION_MESSAGE,
-            new ImageIcon("C:\\Users\\usuario\\Desktop\\PracticaArchivosAc\\src\\practicaarchivos\\anadir.png"),    // null para icono por defecto.
-            new Object[] { "Oferta", "Demanda", "Cancelar" },   // null para YES, NO y CANCEL
-            "opcion 1");
+        int tipo = JOptionPane.showOptionDialog(this, "Escoja el tipo de usuario:", "HUMAN-WARE", JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                new ImageIcon("‪anadir.png"), // null para icono por defecto.
+                new Object[]{"Oferta", "Demanda", "Cancelar"}, // null para YES, NO y CANCEL
+                "opcion 1");
 
-        if (tipo != -1)
-        tipo=tipo+1;
-        System.out.println("seleccionada opcion " + (tipo ));
-        if(tipo==1){
-            Oferta o= new Oferta();
+        if (tipo != -1) {
+            tipo = tipo + 1;
+        }
+        if (tipo == 1) {
+            Oferta o = null;
+            try {
+                o = new Oferta();
+            } catch (IOException ex) {
+                Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
             this.setVisible(false);
-            o.setVisible(true);}else{if(tipo==2){
-                Demanda e= new Demanda();
+            o.setVisible(true);
+        } else {
+            if (tipo == 2) {
+                Demanda e = new Demanda();
                 e.setVisible(true);
 
                 this.setVisible(false);
-            }}
+            }
+        }
     }//GEN-LAST:event_BotonUsuarioActionPerformed
 
     private void BotonEvaluadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonEvaluadorActionPerformed
-    
+
+        Evaluador ev = null;
+        try {
+            ev = new Evaluador();
+        } catch (IOException ex) {
+            Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        ev.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_BotonEvaluadorActionPerformed
 
     private void EmpresaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmpresaButtonActionPerformed
-       this.dispose();
-       Empresa em=new Empresa();
-       em.setBounds(10, 10, 400, 400);
-       em.setVisible(true);
+        this.dispose();
+        Empresa em = null;
+        try {
+            em = new Empresa();
+        } catch (IOException ex) {
+            Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        em.setBounds(10, 10, 400, 400);
+        em.setVisible(true);
     }//GEN-LAST:event_EmpresaButtonActionPerformed
 
     /**

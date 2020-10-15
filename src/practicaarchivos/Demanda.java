@@ -17,6 +17,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import static practicaarchivos.Evaluador.archdem2;
 
 /**
  *
@@ -24,15 +25,19 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Demanda extends javax.swing.JFrame {
 
-    File arch = new File("");
+    
+    String infor;
+    public static File archdem = new File("Demandas.txt");
     String habilidad = "", val = "";
     Oferta o;
+    
 
     /**
      * Creates new form Vista
      */
     public Demanda() {
         initComponents();
+        this.mostrartabla();
         addbutton.setToolTipText("Añadir");
         elimbutton.setToolTipText("Eliminar");
         cleanbutton.setToolTipText("Limpiar");
@@ -129,7 +134,6 @@ public class Demanda extends javax.swing.JFrame {
 
         Completa.setText("Completa");
 
-        insertar.setIcon(new javax.swing.ImageIcon("C:\\Users\\usuario\\Downloads\\anadir.png")); // NOI18N
         insertar.setText("Insertar");
         insertar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -234,7 +238,7 @@ public class Demanda extends javax.swing.JFrame {
                             .addComponent(Nombretf)))
                     .addGroup(frameLayout.createSequentialGroup()
                         .addComponent(jLabel6)
-                        .addGap(37, 37, 37)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(Titulacion, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel4)
                     .addGroup(frameLayout.createSequentialGroup()
@@ -247,7 +251,7 @@ public class Demanda extends javax.swing.JFrame {
                         .addComponent(insertar)
                         .addGap(26, 26, 26)
                         .addComponent(cancelar)))
-                .addGap(18, 18, 18)
+                .addGap(32, 32, 32)
                 .addGroup(frameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(ningu)
                     .addGroup(frameLayout.createSequentialGroup()
@@ -318,11 +322,9 @@ public class Demanda extends javax.swing.JFrame {
                                     .addComponent(projava)
                                     .addComponent(nivelpj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(29, 29, 29))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, frameLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(frameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(habcom)
-                                    .addComponent(nivelhc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, frameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(habcom)
+                                .addComponent(nivelhc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(frameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lider)
@@ -380,7 +382,7 @@ public class Demanda extends javax.swing.JFrame {
             Tabla.getColumnModel().getColumn(7).setResizable(false);
         }
 
-        addbutton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/practicaarchivos/agregar-usuario.png"))); // NOI18N
+        addbutton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/practicaarchivos/iconos/agregar-usuario.png"))); // NOI18N
         addbutton.setBorder(null);
         addbutton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         addbutton.addActionListener(new java.awt.event.ActionListener() {
@@ -389,7 +391,7 @@ public class Demanda extends javax.swing.JFrame {
             }
         });
 
-        elimbutton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/practicaarchivos/borrar.png"))); // NOI18N
+        elimbutton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/practicaarchivos/iconos/borrar.png"))); // NOI18N
         elimbutton.setBorder(null);
         elimbutton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         elimbutton.addActionListener(new java.awt.event.ActionListener() {
@@ -398,7 +400,7 @@ public class Demanda extends javax.swing.JFrame {
             }
         });
 
-        cleanbutton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/practicaarchivos/escoba.png"))); // NOI18N
+        cleanbutton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/practicaarchivos/iconos/escoba.png"))); // NOI18N
         cleanbutton.setBorder(null);
         cleanbutton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cleanbutton.addActionListener(new java.awt.event.ActionListener() {
@@ -407,7 +409,7 @@ public class Demanda extends javax.swing.JFrame {
             }
         });
 
-        SaveButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/practicaarchivos/disquete.png"))); // NOI18N
+        SaveButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/practicaarchivos/iconos/disquete.png"))); // NOI18N
         SaveButton.setBorder(null);
         SaveButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         SaveButton.addActionListener(new java.awt.event.ActionListener() {
@@ -416,7 +418,7 @@ public class Demanda extends javax.swing.JFrame {
             }
         });
 
-        OpenButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/practicaarchivos/sobre-abierto.png"))); // NOI18N
+        OpenButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/practicaarchivos/iconos/sobre-abierto.png"))); // NOI18N
         OpenButton.setBorder(null);
         OpenButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         OpenButton.addActionListener(new java.awt.event.ActionListener() {
@@ -425,7 +427,7 @@ public class Demanda extends javax.swing.JFrame {
             }
         });
 
-        Backbutton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/practicaarchivos/volver.png"))); // NOI18N
+        Backbutton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/practicaarchivos/iconos/volver.png"))); // NOI18N
         Backbutton.setBorder(null);
         Backbutton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Backbutton.addActionListener(new java.awt.event.ActionListener() {
@@ -439,29 +441,30 @@ public class Demanda extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(addbutton)
+                .addGap(18, 18, 18)
+                .addComponent(elimbutton)
+                .addGap(18, 18, 18)
+                .addComponent(cleanbutton)
+                .addGap(18, 18, 18)
+                .addComponent(SaveButton)
+                .addGap(18, 18, 18)
+                .addComponent(OpenButton)
+                .addGap(299, 299, 299)
+                .addComponent(Backbutton)
+                .addContainerGap(34, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(addbutton)
-                        .addGap(18, 18, 18)
-                        .addComponent(elimbutton)
-                        .addGap(18, 18, 18)
-                        .addComponent(cleanbutton)
-                        .addGap(18, 18, 18)
-                        .addComponent(SaveButton)
-                        .addGap(18, 18, 18)
-                        .addComponent(OpenButton)
-                        .addGap(299, 299, 299)
-                        .addComponent(Backbutton))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 587, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(OpenButton, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -497,114 +500,20 @@ public class Demanda extends javax.swing.JFrame {
         frame.setBounds(50, 50, 310, 390);
         frame.setVisible(true);
     }//GEN-LAST:event_addbuttonActionPerformed
- public boolean verificarhabilidades (){
-         if ((projava.isSelected() && nivelpj.getSelectedIndex()!=0) || (habcom.isSelected() && nivelhc.getSelectedIndex()!=0) 
-                 || (seglen.isSelected() && Nivelsl.getSelectedIndex()!=0) || (ningu.isSelected()) 
-                 || (lider.isSelected() && nivell.getSelectedIndex()!=0) || (crea.isSelected() && nivelc.getSelectedIndex()!=0)){
-             return true;
-         } else {
-             return false;
-         }
-     }
-
-    private void insertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertarActionPerformed
-        if ((Nombretf.getText().equals("")) || (Salariotf.getText().equals(""))
-                || (Parcial.isSelected() == false && Completa.isSelected() == false) || this.verificarhabilidades() == false
-                || Titulacion.getSelectedIndex()==0) {
-
-            JOptionPane.showMessageDialog(null, "llene todos los campos");
+    public boolean verificarhabilidades() {
+        if ((projava.isSelected() && nivelpj.getSelectedIndex() != 0) || (habcom.isSelected() && nivelhc.getSelectedIndex() != 0)
+                || (seglen.isSelected() && Nivelsl.getSelectedIndex() != 0) || (ningu.isSelected())
+                || (lider.isSelected() && nivell.getSelectedIndex() != 0) || (crea.isSelected() && nivelc.getSelectedIndex() != 0)) {
+            return true;
         } else {
-
-            String nom = (Nombretf.getText());
-            String email = Emailtf.getText();
-            long sal = Long.parseLong(Salariotf.getText());
-            boolean completa = Completa.isSelected();
-            boolean parcial = Parcial.isSelected();
-            String titulaciones = Titulacion.getSelectedItem().toString();
-            if (Nivelsl.getSelectedItem().toString() != "Escoja valoracion" && seglen.isSelected()) {
-                habilidad = habilidad + "segunda lengua ";
-                val = val + Nivelsl.getSelectedItem().toString() + " ";
-            }
-            if (nivelpj.getSelectedItem().toString() != "Escoja valoracion" && projava.isSelected()) {
-                habilidad = habilidad + "programacionjava ";
-                val = val + nivelpj.getSelectedItem().toString() + " ";
-            }
-            if (nivelhc.getSelectedItem().toString() != "Escoja valoracion" && habcom.isSelected()) {
-                habilidad = habilidad + "habilidadescomunicativas ";
-                val = val + nivelhc.getSelectedItem().toString() + " ";
-            }
-            if (nivell.getSelectedItem().toString() != "Escoja valoracion" && lider.isSelected()) {
-                habilidad = habilidad + "lider ";
-                val = val + nivell.getSelectedItem().toString() + "";
-            }
-            if (nivelc.getSelectedItem().toString() != "Escoja valoracion" && crea.isSelected()) {
-                habilidad = habilidad + "creativo ";
-                val = val + nivelc.getSelectedItem().toString() + " ";
-            }
-            if (ningu.isSelected()) {
-                habilidad = "ninguno";
-                val = "";
-
-            }
-
-            DefaultTableModel table = (DefaultTableModel) Tabla.getModel();
-
-            table.addRow(new Object[]{nom, email, sal, completa, parcial, titulaciones, habilidad, val});
-            frame.setVisible(false);
+            return false;
         }
+    }
 
-    }//GEN-LAST:event_insertarActionPerformed
-
-    private void elimbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_elimbuttonActionPerformed
+    public void mostrartabla() {
         DefaultTableModel table = (DefaultTableModel) Tabla.getModel();
-        table.removeRow(Tabla.getSelectedRow());
-    }//GEN-LAST:event_elimbuttonActionPerformed
-
-    private void cleanbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cleanbuttonActionPerformed
-        DefaultTableModel table = (DefaultTableModel) Tabla.getModel();
-        table.setRowCount(0);
-    }//GEN-LAST:event_cleanbuttonActionPerformed
-
-    private void SaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButtonActionPerformed
-        if (!arch.exists()) {
-            FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos .txt", "txt");
-            fc.setFileFilter(filtro);
-            int opcion = fc.showSaveDialog(this);
-            if (opcion == JFileChooser.APPROVE_OPTION) {
-                arch = fc.getSelectedFile();
-            }
-        }
-        int filas = Tabla.getRowCount();
-        DefaultTableModel table = (DefaultTableModel) Tabla.getModel();
-        try (FileWriter fw = new FileWriter(arch);
-                BufferedWriter bw = new BufferedWriter(fw);) {
-            for (int i = 0; i < filas; i++) {
-                Object nom = table.getValueAt(i, 0);
-                Object email = table.getValueAt(i, 1);
-                Object sal = table.getValueAt(i, 2);
-                Object completa = table.getValueAt(i, 3);
-                Object parcial = table.getValueAt(i, 4);
-                Object titulaciones = table.getValueAt(i, 5);
-                Object habilidad = table.getValueAt(i, 6);
-                Object val = table.getValueAt(i, 7);
-                bw.write(nom + "," + email + "," + sal + "," + completa + "," + parcial + "," + titulaciones + "," + habilidad + "," + val);
-                bw.newLine();
-
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(Demanda.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_SaveButtonActionPerformed
-
-    private void OpenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenButtonActionPerformed
-        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos .txt", "txt");
-        fc.setFileFilter(filtro);
-        int opcion = fc.showOpenDialog(this);
-        if (opcion == JFileChooser.APPROVE_OPTION) {
-            arch = fc.getSelectedFile();
-            DefaultTableModel table = (DefaultTableModel) Tabla.getModel();
-            try (Scanner leer = new Scanner(arch)) {
+        if (archdem.exists()) {
+            try (Scanner leer = new Scanner(archdem)) {
                 while (leer.hasNextLine()) {
 
                     String linea = leer.nextLine();
@@ -621,6 +530,149 @@ public class Demanda extends javax.swing.JFrame {
                     table.addRow(new Object[]{nom, email, sal, completa, parcial, titulaciones, habilidad, val});
 
                 }
+                leer.close();
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(Demanda.class
+                        .getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+
+    private void insertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertarActionPerformed
+
+        if ((Nombretf.getText().equals("")) || (Salariotf.getText().equals(""))
+                || (Parcial.isSelected() == false && Completa.isSelected() == false) || this.verificarhabilidades() == false
+                || Titulacion.getSelectedIndex() == 0) {
+
+            JOptionPane.showMessageDialog(null, "llene todos los campos");
+        } else {
+
+            String nom = (Nombretf.getText());
+            String email = Emailtf.getText();
+            long sal = Long.parseLong(Salariotf.getText());
+            boolean completa = Completa.isSelected();
+            boolean parcial = Parcial.isSelected();
+            String titulaciones = Titulacion.getSelectedItem().toString();
+            habilidad="";
+            val="";
+            if (Nivelsl.getSelectedItem().toString() != "Escoja valoracion" && seglen.isSelected()) {
+                habilidad = habilidad + "segunda lengua ";
+                val = val + Nivelsl.getSelectedItem().toString() + " ";
+            } else {
+                val= val + "0 ";
+            }
+
+            if (nivelpj.getSelectedItem().toString() != "Escoja valoracion" && projava.isSelected()) {
+                habilidad = habilidad + "programacionjava ";
+                val = val + nivelpj.getSelectedItem().toString() + " ";
+            } else {
+                val= val + "0 ";
+            }
+            if (nivelhc.getSelectedItem().toString() != "Escoja valoracion" && habcom.isSelected()) {
+                habilidad = habilidad + "habilidadescomunicativas ";
+                val = val + nivelhc.getSelectedItem().toString() + " ";
+            } else {
+                val= val + "0 ";
+            }
+            if (nivell.getSelectedItem().toString() != "Escoja valoracion" && lider.isSelected()) {
+                habilidad = habilidad + "lider ";
+                val = val + nivell.getSelectedItem().toString() + "";
+            } else {
+                val= val + "0 ";
+            }
+            if (nivelc.getSelectedItem().toString() != "Escoja valoracion" && crea.isSelected()) {
+                habilidad = habilidad + "creativo ";
+                val = val + nivelc.getSelectedItem().toString() + " ";
+            } else {
+                val= val + "0 ";
+            }
+            if (ningu.isSelected()) {
+                habilidad = "ninguno";
+                val = "0 0 0 0 0 ";
+
+            }
+
+            DefaultTableModel table = (DefaultTableModel) Tabla.getModel();
+
+            table.addRow(new Object[]{nom, email, sal, completa, parcial, titulaciones, habilidad, val});
+            frame.setVisible(false);
+
+        }
+
+    }//GEN-LAST:event_insertarActionPerformed
+
+    private void elimbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_elimbuttonActionPerformed
+    if (Tabla.getSelectedRow() == -1){JOptionPane.showMessageDialog(null,"Favor seleccione una fila");}else{
+        DefaultTableModel table = (DefaultTableModel) Tabla.getModel();
+        table.removeRow(Tabla.getSelectedRow());
+        }
+    }//GEN-LAST:event_elimbuttonActionPerformed
+
+    private void cleanbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cleanbuttonActionPerformed
+        DefaultTableModel table = (DefaultTableModel) Tabla.getModel();
+        table.setRowCount(0);
+    }//GEN-LAST:event_cleanbuttonActionPerformed
+
+    private void SaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButtonActionPerformed
+        if (!archdem.exists()) {
+            FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos .txt", "txt");
+            fc.setFileFilter(filtro);
+            int opcion = fc.showSaveDialog(this);
+            if (opcion == JFileChooser.APPROVE_OPTION) {
+                archdem = fc.getSelectedFile();
+            }
+        }
+        int filas = Tabla.getRowCount();
+        DefaultTableModel table = (DefaultTableModel) Tabla.getModel();
+        try (FileWriter fw = new FileWriter(archdem);
+                BufferedWriter bw = new BufferedWriter(fw);) {
+            for (int i = 0; i < filas; i++) {
+                Object nom = table.getValueAt(i, 0);
+                Object email = table.getValueAt(i, 1);
+                Object sal = table.getValueAt(i, 2);
+                Object completa = table.getValueAt(i, 3);
+                Object parcial = table.getValueAt(i, 4);
+                Object titulaciones = table.getValueAt(i, 5);
+                Object habilidad = table.getValueAt(i, 6);
+                Object val = table.getValueAt(i, 7);
+                bw.write(nom + "," + email + "," + sal + "," + completa + "," + parcial + "," + titulaciones + "," + habilidad + "," + val);
+                bw.newLine();
+
+            }
+            bw.close();
+            JOptionPane.showMessageDialog(null, "Guardado");
+        } catch (IOException ex) {
+            Logger.getLogger(Demanda.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_SaveButtonActionPerformed
+
+    private void OpenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenButtonActionPerformed
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos .txt", "txt");
+        fc.setFileFilter(filtro);
+        int opcion = fc.showOpenDialog(this);
+        if (opcion == JFileChooser.APPROVE_OPTION) {
+            archdem = fc.getSelectedFile();
+            DefaultTableModel table = (DefaultTableModel) Tabla.getModel();
+            try (Scanner leer = new Scanner(archdem)) {
+                while (leer.hasNextLine()) {
+
+                    String linea = leer.nextLine();
+                    String[] Datos = linea.split(",");
+                    String nom = (Datos[0]);
+                    String email = Datos[1];
+                    long sal = Long.parseLong(Datos[2]);
+                    boolean completa = Boolean.parseBoolean(Datos[3]);
+                    boolean parcial = Boolean.parseBoolean(Datos[4]);
+                    String titulaciones = (Datos[5]);
+                    String habilidad = (Datos[6]);
+                    String val = (Datos[7]);
+
+                    table.addRow(new Object[]{nom, email, sal, completa, parcial, titulaciones, habilidad, val});
+
+                }
+                leer.close();
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(Demanda.class
                         .getName()).log(Level.SEVERE, null, ex);
@@ -653,7 +705,7 @@ public class Demanda extends javax.swing.JFrame {
 
     private void EmailtfKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_EmailtfKeyTyped
         char c = evt.getKeyChar();
-        if ((c < 'a' || c > 'z') && (c < 'A' || c > 'Z') && (c < '0' || c > '9') && (((int) (evt.getKeyChar()) != 64)) && ((int) (evt.getKeyChar()) == 250) && ((int) (evt.getKeyChar()) != 196) && ((int) (evt.getKeyChar()) != 95)) {
+        if ((c < 'a' || c > 'z') && (c < 'A' || c > 'Z') && (c < '0' || c > '9') &&  ((int) (evt.getKeyChar()) != 196) && ((int) (evt.getKeyChar()) != 95) && ((int) (evt.getKeyChar())==44)) {
             evt.consume();
         }
     }//GEN-LAST:event_EmailtfKeyTyped
@@ -677,7 +729,7 @@ public class Demanda extends javax.swing.JFrame {
     }//GEN-LAST:event_projavaActionPerformed
 
     private void seglenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seglenActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_seglenActionPerformed
 
     private void nivellActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nivellActionPerformed
@@ -693,7 +745,7 @@ public class Demanda extends javax.swing.JFrame {
     }//GEN-LAST:event_nivelpjActionPerformed
 
     private void NivelslActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NivelslActionPerformed
-        // TODO add your handling code here:
+
 
     }//GEN-LAST:event_NivelslActionPerformed
 

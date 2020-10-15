@@ -1,1 +1,3 @@
-lkjhgfds,987654321,87654321,false,true,Tecnico en sistemas,Frances,1
+ingeniero,0,100000,false,true,Ingeniero industrial,segunda lengua creativo ,5 0 0 0 5 ,ingenierosSAS
+programador,0,1000000,false,true,Ingeniero de sistemas,programacionjava ,0 5 0 0 0 ,tecnologias
+trabajoMD,0,100,false,true,Bachiller,habilidadescomunicativas ,0 0 3 0 0 ,coorporacion
