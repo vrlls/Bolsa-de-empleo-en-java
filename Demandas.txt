@@ -1,0 +1,2 @@
+ktgc,0,0,false,true,Bachiller,segunda lengua ,3 
+mgv,0,0,false,true,Tecnico en sistemas,ninguno,
